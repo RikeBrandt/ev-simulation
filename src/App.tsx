@@ -1,4 +1,5 @@
 import "./App.css";
+import { InputForm } from "./components/InputForm";
 
 type SimulationValues = {
   chargePoints: number;
@@ -8,7 +9,13 @@ type SimulationValues = {
 };
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <InputForm />
+      <div className="text-cyan-400" />
+      <div className="text-cyan-800" />
+    </>
+  );
 }
 
 export default App;
