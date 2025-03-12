@@ -1,18 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NumberInput } from "./inputs/NumberInput";
 import SelectInput from "./inputs/SelectInput";
 import { Card } from "./Card";
 import RangeInput from "./inputs/RangeInput";
+import { useSimulationInput } from "./SimulationInputContext";
 
 export const InputForm = () => {
+  const { setSimulationInput } = useSimulationInput();
+
   const [chargePoints, setChargePoints] = useState(20);
   const [power, setPower] = useState(11);
   const [consumption, setConsumption] = useState(18);
   const [utilizationRate, setUtilizationRate] = useState(100);
 
+  useEffect(() => {
+    setSimulationInput({ chargePoints, power, consumption, utilizationRate });
+  }, [chargePoints, power, consumption, utilizationRate]);
+
   return (
     <Card>
-      <div className="flex flex-col gap-5 ">
+      <div className="flex flex-col gap-5 flex-none">
         <p>Input Parameters</p>
 
         <NumberInput
