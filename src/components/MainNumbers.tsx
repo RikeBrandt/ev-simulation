@@ -6,22 +6,32 @@ import Consumption from "../assets/consumption.svg?react";
 import Charges from "../assets/charges.svg?react";
 import { useSimulationInput } from "./context/SimulationInputContext";
 import {
-  calculateMaxPowerLoad,
-  calculateUsedChargingStations,
+  calculateAveragePowerUsage,
+  calculateHourlyPowerUsage,
+  calculatePeakPowerLoad,
+  calculateBaseUtilization,
 } from "./utils/calculations";
 
 export const MainNumbers = () => {
   const {
     simulationInput: { chargePoints, utilizationRate, power, consumption },
   } = useSimulationInput();
-  const occupiedSlots = useMemo(
-    () => calculateUsedChargingStations(chargePoints, utilizationRate),
+  const baseUtilization = useMemo(
+    () => calculateBaseUtilization(chargePoints, utilizationRate),
     [chargePoints, utilizationRate]
   );
 
   const peakPowerLoad = useMemo(
-    () => calculateMaxPowerLoad(chargePoints, occupiedSlots, power),
-    [occupiedSlots, power]
+    () => calculatePeakPowerLoad(chargePoints, baseUtilization, power),
+    [baseUtilization, power]
+  );
+
+  const averagePowerLoad = useMemo(
+    () =>
+      calculateAveragePowerUsage(
+        calculateHourlyPowerUsage(chargePoints, utilizationRate, power)
+      ),
+    [chargePoints, utilizationRate, power]
   );
 
   return (
@@ -37,7 +47,7 @@ export const MainNumbers = () => {
 
       <Card>
         <ComputationDisplay
-          result={"70 kW"}
+          result={`${averagePowerLoad} kw`}
           label="avg. power load"
           color="text-green-400"
           icon={<BoltGreen />}

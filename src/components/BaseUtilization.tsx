@@ -1,9 +1,8 @@
 import { FC } from "react";
 import { useSimulationInput } from "./context/SimulationInputContext";
-import { calculateUsedChargingStations } from "./utils/calculations";
+import { calculateBaseUtilization } from "./utils/calculations";
 
-//idea: make this peak occupation
-export const Occupation: FC<{
+export const BaseUtilization: FC<{
   chargePoints: number;
   utilizationRate: number;
 }> = () => {
@@ -11,17 +10,17 @@ export const Occupation: FC<{
     simulationInput: { chargePoints, utilizationRate },
   } = useSimulationInput();
   const slots = Array.from({ length: chargePoints }, (_, i) => i);
-  const occupiedSlots = calculateUsedChargingStations(
+  const baseUtilization = calculateBaseUtilization(
     chargePoints,
     utilizationRate
   );
   return (
     <div>
-      <p className="text-sm text-zinc-300">Average occupation</p>
+      <p className="text-sm text-zinc-300">Base utilization</p>
       <div className="flex flex-wrap gap-2 pt-4">
         {slots.map((slot) => (
           <div
-            className={slot < occupiedSlots ? "slot slot-active" : "slot"}
+            className={slot < baseUtilization ? "slot slot-active" : "slot"}
             key={slot}
           ></div>
         ))}

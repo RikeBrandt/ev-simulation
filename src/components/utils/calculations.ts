@@ -1,4 +1,4 @@
-export function calculateUsedChargingStations(
+export function calculateBaseUtilization(
   chargePoints: number,
   utilizationRate: number
 ) {
@@ -7,42 +7,43 @@ export function calculateUsedChargingStations(
 
 export function calculateMaxPowerLoad(
   totalChargingStations: number,
+  power: number
+) {
+  return Math.round(totalChargingStations * power);
+}
+
+export function calculatePeakPowerLoad(
+  totalChargingStations: number,
   occupiedChargingStations: number,
   power: number
 ) {
-  return (
+  return Math.round(
     Math.min(occupiedChargingStations * 1.4, totalChargingStations) * power
   );
 }
 
-export function calculatePowerChartData() {
-  return [
-    { x: "06:00", y: calculatePowerPerHour(20, 10, 0.05, 11) },
-    { x: "08:00", y: calculatePowerPerHour(20, 10, 0.2, 11) },
-    { x: "10:00", y: calculatePowerPerHour(20, 10, 0.6, 11) },
-    { x: "12:00", y: calculatePowerPerHour(20, 10, 0.9, 11) },
-    { x: "14:00", y: calculatePowerPerHour(20, 10, 1.2, 11) }, // Midday peak
-    { x: "16:00", y: calculatePowerPerHour(20, 10, 0.8, 11) },
-    { x: "18:00", y: calculatePowerPerHour(20, 10, 0.7, 11) },
-    { x: "20:00", y: calculatePowerPerHour(20, 10, 0.6, 11) },
-  ];
+// Predefined hourly utilization pattern (10% to 140%)
+export const HOUR_FACTORS = [
+  0.1, 0.2, 0.3, 0.4, 0.6, 0.8, 0.9, 1.2, 1.4, 1.2, 0.7, 0.6, 0.2,
+];
+
+export function calculateHourlyPowerUsage(
+  chargePoints: number,
+  utilizationRate: number,
+  power: number
+) {
+  return HOUR_FACTORS.map((factor) => {
+    const activeChargePoints = Math.min(
+      chargePoints * (utilizationRate / 200) * factor,
+      chargePoints
+    );
+    const powerUsage = activeChargePoints * power;
+    return Math.round(powerUsage);
+  });
 }
 
-const calculatePowerPerHour = (
-  chargePoints: number,
-  avgUsedChargePoints: number,
-  utilizationRate: number,
-  powerPerChargePoint: number
-): number => {
-  // Ensure utilizationRate is within bounds
-  const clampedUtilization = Math.max(0, Math.min(utilizationRate, 2));
-
-  // Effective charge points in use based on utilization
-  const activeChargePoints = Math.min(
-    avgUsedChargePoints * clampedUtilization,
-    chargePoints
+export function calculateAveragePowerUsage(usageData: number[]) {
+  return Math.round(
+    usageData.reduce((sum, num) => sum + num, 0) / usageData.length
   );
-
-  // Calculate peak power (active chargers * power per charger)
-  return Math.round(activeChargePoints * powerPerChargePoint);
-};
+}
