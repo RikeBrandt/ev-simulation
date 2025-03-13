@@ -3,21 +3,22 @@ import { Card } from "./layout/Card";
 import BoltRed from "../assets/bolt-red.svg?react";
 import BoltGreen from "../assets/bolt-green.svg?react";
 import Consumption from "../assets/consumption.svg?react";
-import Charges from "../assets/charges.svg?react";
 import { useSimulationInput } from "./context/SimulationInputContext";
 import {
   calculateAveragePowerUsage,
-  calculateHourlyPowerUsage,
+  calculatePowerUsage,
   calculatePeakPowerLoad,
   calculateBaseUtilization,
   calculateTotalEnergyConsumption,
   calculateHourlyEnergyConsumption,
 } from "./utils/calculations";
+import { useTimePeriod } from "./context/TimePeriodContext";
 
 export const MainNumbers = () => {
   const {
     simulationInput: { chargePoints, utilizationRate, power, consumption },
   } = useSimulationInput();
+  const { timePeriod } = useTimePeriod();
   const baseUtilization = useMemo(
     () => calculateBaseUtilization(chargePoints, utilizationRate),
     [chargePoints, utilizationRate]
@@ -31,9 +32,9 @@ export const MainNumbers = () => {
   const averagePowerLoad = useMemo(
     () =>
       calculateAveragePowerUsage(
-        calculateHourlyPowerUsage(chargePoints, utilizationRate, power)
+        calculatePowerUsage(chargePoints, utilizationRate, power, timePeriod)
       ),
-    [chargePoints, utilizationRate, power]
+    [chargePoints, utilizationRate, power, timePeriod]
   );
 
   const energyConsumption = useMemo(
@@ -43,7 +44,8 @@ export const MainNumbers = () => {
           chargePoints,
           utilizationRate,
           power,
-          consumption
+          consumption,
+          timePeriod
         )
       ),
     [chargePoints, utilizationRate, power, consumption]
@@ -75,15 +77,6 @@ export const MainNumbers = () => {
           label="total energy consumption"
           color="text-white"
           icon={<Consumption />}
-        />
-      </Card>
-
-      <Card>
-        <ComputationDisplay
-          result={"35"}
-          label="Charging events"
-          color="text-white"
-          icon={<Charges />}
         />
       </Card>
     </div>

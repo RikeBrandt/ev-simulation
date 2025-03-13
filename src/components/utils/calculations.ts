@@ -1,3 +1,5 @@
+import { TimePeriod } from "../context/TimePeriodContext";
+
 export function calculateBaseUtilization(
   chargePoints: number,
   utilizationRate: number
@@ -27,6 +29,8 @@ export const HOUR_FACTORS = [
   0.1, 0.2, 0.3, 0.4, 0.6, 0.8, 0.9, 1.2, 1.4, 1.2, 0.7, 0.6, 0.2,
 ];
 
+export const WEEK_FACTORS = [0.9, 0.6, 0.5, 0.7, 0.8, 1.4, 0.2];
+
 function calculateActiveChargePoints(
   chargePoints: number,
   utilizationRate: number,
@@ -38,12 +42,14 @@ function calculateActiveChargePoints(
   );
 }
 
-export function calculateHourlyPowerUsage(
+export function calculatePowerUsage(
   chargePoints: number,
   utilizationRate: number,
-  power: number
+  power: number,
+  timePeriod: TimePeriod
 ) {
-  return HOUR_FACTORS.map((factor) => {
+  const factors = timePeriod === "DAY" ? HOUR_FACTORS : WEEK_FACTORS;
+  return factors.map((factor) => {
     const activeChargePoints = calculateActiveChargePoints(
       chargePoints,
       utilizationRate,
@@ -65,9 +71,12 @@ export function calculateHourlyEnergyConsumption(
   chargePoints: number,
   utilizationRate: number,
   power: number,
-  consumption: number
+  consumption: number,
+  timePeriod: TimePeriod
 ) {
-  return HOUR_FACTORS.map((factor) => {
+  const factors = timePeriod === "DAY" ? HOUR_FACTORS : WEEK_FACTORS;
+
+  return factors.map((factor) => {
     const activeChargePoints = calculateActiveChargePoints(
       chargePoints,
       utilizationRate,
