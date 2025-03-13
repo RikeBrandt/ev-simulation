@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { NumberInput } from "./inputs/NumberInput";
 import SelectInput from "./inputs/SelectInput";
-import { Card } from "./Card";
+import { Card } from "./layout/Card";
 import RangeInput from "./inputs/RangeInput";
-import { useSimulationInput } from "./SimulationInputContext";
+import { useSimulationInput } from "./context/SimulationInputContext";
 
 export const InputForm = () => {
   const { setSimulationInput } = useSimulationInput();
@@ -19,7 +19,7 @@ export const InputForm = () => {
 
   return (
     <Card>
-      <div className="flex flex-col gap-5 flex-none">
+      <div className="flex flex-col gap-5 min-w-[220px]">
         <p>Input Parameters</p>
 
         <NumberInput

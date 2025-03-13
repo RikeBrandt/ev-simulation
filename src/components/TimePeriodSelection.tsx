@@ -1,5 +1,9 @@
 import { FC } from "react";
-import { TimePeriod, timePeriods, useTimePeriod } from "./TimePeriodContext";
+import {
+  TimePeriod,
+  timePeriods,
+  useTimePeriod,
+} from "./context/TimePeriodContext";
 
 export const TimePeriodSelection = () => {
   const { timePeriod, setTimePeriod } = useTimePeriod();

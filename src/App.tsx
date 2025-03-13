@@ -1,14 +1,14 @@
 import "./App.css";
-import { Card } from "./components/Card";
+import { Card } from "./components/layout/Card";
 import { InputForm } from "./components/InputForm";
 import { Occupation } from "./components/Occupation";
-import { SimulationInputProvider } from "./components/SimulationInputContext";
-import { TimePeriodProvider } from "./components/TimePeriodContext";
+import { SimulationInputProvider } from "./components/context/SimulationInputContext";
+import { TimePeriodProvider } from "./components/context/TimePeriodContext";
 import { TimePeriodSelection } from "./components/TimePeriodSelection";
+import { MainNumbers } from "./components/MainNumbers";
+import { PowerSimulationChart } from "./components/PowerChart";
 
 //todo remove gap-30
-
-// next step: create a provider for simulation input values
 
 function App() {
   return (
@@ -23,6 +23,8 @@ function App() {
               <TimePeriodSelection />
             </div>
 
+            <MainNumbers />
+            <PowerSimulationChart />
             <Card>
               <Occupation chargePoints={20} utilizationRate={100} />
             </Card>
