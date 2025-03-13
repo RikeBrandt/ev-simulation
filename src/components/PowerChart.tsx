@@ -49,14 +49,12 @@ export const PowerSimulationChart = () => {
 
   return (
     <Card>
-      <div className="w-full max-w-4xl mx-auto p-4">
-        <Chart
-          options={chartOptions}
-          series={[{ name: "Power Usage", data: powerData }]}
-          type="area"
-          height={350}
-        />
-      </div>
+      <Chart
+        options={chartOptions}
+        series={[{ name: "Power Usage (kW)", data: powerData }]}
+        type="area"
+        height={300}
+      />
     </Card>
   );
 };

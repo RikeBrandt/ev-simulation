@@ -32,8 +32,8 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .slot {
-  width: 45px;
-  height: 65px;
+  width: 25px;
+  height: 45px;
   background-color: var(--color-zinc-500);
   border-radius: 2px;
 }

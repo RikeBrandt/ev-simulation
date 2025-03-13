@@ -10,6 +10,8 @@ import {
   calculateHourlyPowerUsage,
   calculatePeakPowerLoad,
   calculateBaseUtilization,
+  calculateTotalEnergyConsumption,
+  calculateHourlyEnergyConsumption,
 } from "./utils/calculations";
 
 export const MainNumbers = () => {
@@ -34,6 +36,19 @@ export const MainNumbers = () => {
     [chargePoints, utilizationRate, power]
   );
 
+  const energyConsumption = useMemo(
+    () =>
+      calculateTotalEnergyConsumption(
+        calculateHourlyEnergyConsumption(
+          chargePoints,
+          utilizationRate,
+          power,
+          consumption
+        )
+      ),
+    [chargePoints, utilizationRate, power, consumption]
+  );
+
   return (
     <div className="flex gap-4">
       <Card>
@@ -56,7 +71,7 @@ export const MainNumbers = () => {
 
       <Card>
         <ComputationDisplay
-          result={"1200 kWh"}
+          result={`${energyConsumption} kWh`}
           label="total energy consumption"
           color="text-white"
           icon={<Consumption />}

@@ -44,7 +44,7 @@ export const InputForm = () => {
           onChange={setConsumption}
           label="Average consumption per car"
           options={[
-            { value: 7, label: "7 kWh" },
+            { value: 7, label: "11 kWh" },
             { value: 18, label: "18 kWh" },
             { value: 15, label: "20 kWh" },
           ]}
