@@ -25,8 +25,9 @@ export const MainNumbers = () => {
   );
 
   const peakPowerLoad = useMemo(
-    () => calculatePeakPowerLoad(chargePoints, baseUtilization, power),
-    [baseUtilization, power]
+    () =>
+      calculatePeakPowerLoad(chargePoints, baseUtilization, power, timePeriod),
+    [baseUtilization, power, timePeriod]
   );
 
   const averagePowerLoad = useMemo(

@@ -17,19 +17,27 @@ export function calculateMaxPowerLoad(
 export function calculatePeakPowerLoad(
   totalChargingStations: number,
   occupiedChargingStations: number,
-  power: number
+  power: number,
+  timePeriod: TimePeriod
 ) {
   return Math.round(
-    Math.min(occupiedChargingStations * 1.4, totalChargingStations) * power
+    Math.min(
+      occupiedChargingStations * (peakUsage.get(timePeriod) ?? 1),
+      totalChargingStations
+    ) * power
   );
 }
+
+const peakUsage = new Map<TimePeriod, number>();
+peakUsage.set("DAY", 1.4);
+peakUsage.set("WEEK", 1.7);
 
 // Predefined hourly utilization pattern (10% to 140%)
 export const HOUR_FACTORS = [
   0.1, 0.2, 0.3, 0.4, 0.6, 0.8, 0.9, 1.2, 1.4, 1.2, 0.7, 0.6, 0.2,
 ];
 
-export const WEEK_FACTORS = [0.9, 0.6, 0.5, 0.7, 0.8, 1.4, 0.2];
+export const WEEK_FACTORS = [1.4, 0.7, 0.5, 0.6, 0.8, 1.7, 0.1];
 
 function calculateActiveChargePoints(
   chargePoints: number,
