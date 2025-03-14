@@ -14,7 +14,7 @@ export const NumberInput: FC<{
         onChange={(e) => setValue(Number(e.target.value))}
         className="w-full px-2 py-2 border border-zinc-500 rounded-lg focus:outline-none focus:ring-1 focus:ring-white"
       />
-      <Label label={label} />
+      <Label>{label}</Label>
     </div>
   );
 };

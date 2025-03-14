@@ -1,21 +1,20 @@
-import { FC } from "react";
 import { useSimulationInput } from "./context/SimulationInputContext";
 import { calculateBaseUtilization } from "./utils/calculations";
 import ChargeIcon from "../assets/charges.svg?react";
 import { Card } from "./layout/Card";
 
-export const BaseUtilization: FC<{
-  chargePoints: number;
-  utilizationRate: number;
-}> = () => {
+export const BaseUtilization = () => {
   const {
-    simulationInput: { chargePoints, utilizationRate },
+    simulationInput: { chargePoints, arrivalProbability },
   } = useSimulationInput();
+
   const slots = Array.from({ length: chargePoints }, (_, i) => i);
+
   const baseUtilization = calculateBaseUtilization(
     chargePoints,
-    utilizationRate
+    arrivalProbability
   );
+
   return (
     <Card>
       <div className="flex items-center gap-1">

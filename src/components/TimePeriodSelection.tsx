@@ -1,9 +1,5 @@
-import { FC } from "react";
-import {
-  TimePeriod,
-  timePeriods,
-  useTimePeriod,
-} from "./context/TimePeriodContext";
+import { timePeriods, useTimePeriod } from "./context/TimePeriodContext";
+import { TimePeriodButton } from "./layout/TimePeriodButton";
 
 export const TimePeriodSelection = () => {
   const { timePeriod, setTimePeriod } = useTimePeriod();
@@ -18,20 +14,5 @@ export const TimePeriodSelection = () => {
         />
       ))}
     </div>
-  );
-};
-
-const TimePeriodButton: FC<{
-  label: TimePeriod;
-  active: TimePeriod;
-  setActive: (value: TimePeriod) => void;
-}> = ({ active, label, setActive }) => {
-  return (
-    <button
-      className={active === label ? "button-active" : undefined}
-      onClick={() => setActive(label)}
-    >
-      {label}
-    </button>
   );
 };

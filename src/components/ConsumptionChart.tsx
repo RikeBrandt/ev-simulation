@@ -1,31 +1,34 @@
 import { useMemo } from "react";
 import Chart from "react-apexcharts";
 import { useSimulationInput } from "./context/SimulationInputContext";
-import { calculateHourlyEnergyConsumption } from "./utils/calculations";
+import { calculateEnergyConsumptionOverTime } from "./utils/calculations";
 import { ApexOptions } from "apexcharts";
 import { Card } from "./layout/Card";
 import { useTimePeriod } from "./context/TimePeriodContext";
-import { primaryChartColor, secondaryChartColor } from "./PowerChart";
-import { getXAsisDescription, getXLabelByTimePeriod } from "./utils/labels";
+import { getXAsisDescription, getXAsisLabelByTimePeriod } from "./utils/labels";
+import {
+  PRIMARY_CHART_COLOR,
+  SECONDARY_CHART_COLOR,
+} from "./utils/staticValues";
 
 export const EnergyConsumptionChart = () => {
   const {
-    simulationInput: { chargePoints, utilizationRate, power, consumption },
+    simulationInput: { chargePoints, arrivalProbability, power, consumption },
   } = useSimulationInput();
   const { timePeriod } = useTimePeriod();
 
   const energyData = useMemo(() => {
-    return calculateHourlyEnergyConsumption(
+    return calculateEnergyConsumptionOverTime(
       chargePoints,
-      utilizationRate,
+      arrivalProbability,
       power,
       consumption,
       timePeriod
     ).map((energy, i) => ({
-      x: getXLabelByTimePeriod(i, timePeriod),
+      x: getXAsisLabelByTimePeriod(i, timePeriod),
       y: energy,
     }));
-  }, [chargePoints, utilizationRate, power, consumption, timePeriod]);
+  }, [chargePoints, arrivalProbability, power, consumption, timePeriod]);
 
   const chartOptions: ApexOptions = {
     chart: { type: "bar", toolbar: { show: false } },
@@ -33,23 +36,23 @@ export const EnergyConsumptionChart = () => {
       categories: energyData.map((d) => d.x),
       title: {
         text: getXAsisDescription(timePeriod),
-        style: { color: secondaryChartColor },
+        style: { color: SECONDARY_CHART_COLOR },
       },
-      labels: { style: { colors: secondaryChartColor } },
+      labels: { style: { colors: SECONDARY_CHART_COLOR } },
     },
     yaxis: {
       title: {
         text: "Energy Consumption (kWh)",
-        style: { color: secondaryChartColor },
+        style: { color: SECONDARY_CHART_COLOR },
       },
-      labels: { style: { colors: secondaryChartColor } },
+      labels: { style: { colors: SECONDARY_CHART_COLOR } },
     },
     tooltip: { theme: "dark" },
     dataLabels: { enabled: false },
-    colors: [primaryChartColor],
+    colors: [PRIMARY_CHART_COLOR],
     grid: {
       show: true,
-      borderColor: secondaryChartColor,
+      borderColor: SECONDARY_CHART_COLOR,
     },
   };
 

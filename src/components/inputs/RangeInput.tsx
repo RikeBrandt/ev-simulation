@@ -5,18 +5,27 @@ interface RangeInputProps {
   value: number;
   onChange: (value: number) => void;
   label: string;
+  min: number;
+  max: number;
 }
 
-const RangeInput: FC<RangeInputProps> = ({ value, onChange, label }) => {
+const RangeInput: FC<RangeInputProps> = ({
+  value,
+  onChange,
+  label,
+  min,
+  max,
+}) => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
+  const mid = max / 2;
 
   return (
     <div className="flex flex-col">
       <input
         type="range"
-        min={20}
-        max={200}
-        step={1}
+        min={min}
+        max={max}
+        step={10}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
         onMouseEnter={() => setTooltipVisible(true)}
@@ -25,9 +34,9 @@ const RangeInput: FC<RangeInputProps> = ({ value, onChange, label }) => {
         style={{
           WebkitAppearance: "none",
           background: `linear-gradient(to right, var(--color-cyan-400) 0%, var(--color-cyan-400) ${
-            ((value - 10) / (200 - 10)) * 100
+            ((value - 10) / (max - 10)) * 100
           }%, var(--color-cyan-800) ${
-            ((value - 10) / (200 - 10)) * 100
+            ((value - 10) / (max - 10)) * 100
           }%, var(--color-cyan-800) 100%)`,
         }}
       />
@@ -36,7 +45,7 @@ const RangeInput: FC<RangeInputProps> = ({ value, onChange, label }) => {
         <div
           className="absolute -top-8 bg-blue-500 text-white text-xs px-2 py-1 rounded-md"
           style={{
-            left: `${((value - 20) / (200 - 20)) * 100}%`,
+            left: `${((value - min) / (max - min)) * 100}%`,
             transform: "translateX(-50%)",
           }}
         >
@@ -45,12 +54,12 @@ const RangeInput: FC<RangeInputProps> = ({ value, onChange, label }) => {
       )}
 
       <div className="flex justify-between mt-2 text-xs text-zinc-300">
-        <span>20%</span>
-        <span className="font-semibold">100%</span>
-        <span>200%</span>
+        <span>{min}%</span>
+        <span className="font-semibold">{mid}%</span>
+        <span>{max}%</span>
       </div>
 
-      <Label label={label} />
+      <Label>{label}</Label>
     </div>
   );
 };

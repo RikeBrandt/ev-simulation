@@ -3,28 +3,35 @@ import Chart from "react-apexcharts";
 import { useSimulationInput } from "./context/SimulationInputContext";
 import { Card } from "./layout/Card";
 import {
-  calculatePowerUsage,
+  calculatePowerUsageOverTime,
   calculateMaxPowerLoad,
 } from "./utils/calculations";
 import { ApexOptions } from "apexcharts";
 import { useTimePeriod } from "./context/TimePeriodContext";
-import { getXAsisDescription, getXLabelByTimePeriod } from "./utils/labels";
-
-export const secondaryChartColor = "#90A4AE";
-export const primaryChartColor = "oklch(0.789 0.154 211.53)";
+import { getXAsisDescription, getXAsisLabelByTimePeriod } from "./utils/labels";
+import {
+  PRIMARY_CHART_COLOR,
+  SECONDARY_CHART_COLOR,
+} from "./utils/staticValues";
 
 export const PowerSimulationChart = () => {
   const {
-    simulationInput: { chargePoints, utilizationRate, power },
+    simulationInput: { chargePoints, arrivalProbability, power },
   } = useSimulationInput();
   const { timePeriod } = useTimePeriod();
 
   const powerData = useMemo(
     () =>
-      calculatePowerUsage(chargePoints, utilizationRate, power, timePeriod).map(
-        (power, i) => ({ x: getXLabelByTimePeriod(i, timePeriod), y: power })
-      ),
-    [chargePoints, utilizationRate, power, timePeriod]
+      calculatePowerUsageOverTime(
+        chargePoints,
+        arrivalProbability,
+        power,
+        timePeriod
+      ).map((power, i) => ({
+        x: getXAsisLabelByTimePeriod(i, timePeriod),
+        y: power,
+      })),
+    [chargePoints, arrivalProbability, power, timePeriod]
   );
 
   const chartOptions: ApexOptions = {
@@ -32,18 +39,18 @@ export const PowerSimulationChart = () => {
     xaxis: {
       title: {
         text: getXAsisDescription(timePeriod),
-        style: { color: secondaryChartColor },
+        style: { color: SECONDARY_CHART_COLOR },
       },
       categories: powerData.map((d) => d.x),
-      labels: { style: { colors: secondaryChartColor } },
+      labels: { style: { colors: SECONDARY_CHART_COLOR } },
     },
     yaxis: {
       title: {
         text: "Power Usage (kW)",
-        style: { color: secondaryChartColor },
+        style: { color: SECONDARY_CHART_COLOR },
       },
       max: calculateMaxPowerLoad(chargePoints, power),
-      labels: { style: { colors: secondaryChartColor } },
+      labels: { style: { colors: SECONDARY_CHART_COLOR } },
     },
     stroke: { curve: "smooth", width: 2 },
     fill: {
@@ -51,10 +58,10 @@ export const PowerSimulationChart = () => {
       gradient: { shadeIntensity: 0.8, opacityFrom: 0.8, opacityTo: 0.2 },
     },
     dataLabels: { enabled: false },
-    colors: [primaryChartColor],
+    colors: [PRIMARY_CHART_COLOR],
     grid: {
       show: true,
-      borderColor: secondaryChartColor,
+      borderColor: SECONDARY_CHART_COLOR,
     },
     tooltip: { enabled: true, theme: "dark" },
   };

@@ -4,7 +4,7 @@ import { BaseUtilization } from "./components/BaseUtilization";
 import { SimulationInputProvider } from "./components/context/SimulationInputContext";
 import { TimePeriodProvider } from "./components/context/TimePeriodContext";
 import { TimePeriodSelection } from "./components/TimePeriodSelection";
-import { MainNumbers } from "./components/MainNumbers";
+import { MainValues } from "./components/MainNumbers";
 import { PowerSimulationChart } from "./components/PowerChart";
 import { EnergyConsumptionChart } from "./components/ConsumptionChart";
 
@@ -17,9 +17,9 @@ function App() {
         <div className="flex gap-8 items-start">
           <InputForm />
 
-          <div className="grow flex flex-col gap-6">
+          <div className="grow flex flex-col gap-4">
             <div className="flex justify-between items-center">
-              <MainNumbers />
+              <MainValues />
               <TimePeriodSelection />
             </div>
 
@@ -27,8 +27,9 @@ function App() {
               <div className="grow">
                 <PowerSimulationChart />
               </div>
-              <BaseUtilization chargePoints={20} utilizationRate={100} />
+              <BaseUtilization />
             </div>
+
             <EnergyConsumptionChart />
           </div>
         </div>

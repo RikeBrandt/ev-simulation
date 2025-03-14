@@ -1,64 +1,58 @@
 import { TimePeriod } from "../context/TimePeriodContext";
+import {
+  HOUR_FACTORS,
+  MAX_ARRIVAL_PROBABILITY,
+  PEAK_USAGE_FACTOR,
+  WEEK_FACTORS,
+} from "./staticValues";
 
 /**
  *
  * @param chargePoints
- * @param utilizationRate
+ * @param arrivalProbability
  * @returns The base amount of used charge points
  */
 export function calculateBaseUtilization(
   chargePoints: number,
-  utilizationRate: number
-) {
-  return Math.round((utilizationRate / 200) * chargePoints);
-}
-
-export function calculateMaxPowerLoad(
-  totalChargingStations: number,
-  power: number
-) {
-  return Math.round(totalChargingStations * power);
-}
-
-export function calculatePeakPowerLoad(
-  totalChargingStations: number,
-  occupiedChargingStations: number,
-  power: number,
-  timePeriod: TimePeriod
+  arrivalProbability: number
 ) {
   return Math.round(
-    Math.min(
-      occupiedChargingStations * (peakUsage.get(timePeriod) ?? 1),
-      totalChargingStations
-    ) * power
+    (arrivalProbability / MAX_ARRIVAL_PROBABILITY) * chargePoints
   );
 }
 
-const peakUsage = new Map<TimePeriod, number>();
-peakUsage.set("DAY", 1.4);
-peakUsage.set("WEEK", 1.7);
+export function calculateMaxPowerLoad(chargePoints: number, power: number) {
+  return Math.round(chargePoints * power);
+}
 
-// Predefined hourly utilization pattern (10% to 140%)
-export const HOUR_FACTORS = [
-  0.1, 0.2, 0.3, 0.4, 0.6, 0.8, 0.9, 1.2, 1.4, 1.2, 0.7, 0.6, 0.2,
-];
-
-export const WEEK_FACTORS = [1.4, 0.7, 0.5, 0.6, 0.8, 1.7, 0.1];
+export function calculatePeakPowerLoad(
+  chargePoints: number,
+  arrivalProbability: number,
+  power: number,
+  timePeriod: TimePeriod
+) {
+  const occupiedChargingStationsAtPeak = calculateActiveChargePoints(
+    chargePoints,
+    arrivalProbability,
+    PEAK_USAGE_FACTOR.get(timePeriod)
+  );
+  return Math.round(occupiedChargingStationsAtPeak * power);
+}
 
 function calculateActiveChargePoints(
   chargePoints: number,
-  utilizationRate: number,
-  factor: number
+  arrivalProbability: number,
+  factor = 1
 ) {
   return Math.min(
-    chargePoints * (utilizationRate / 200) * factor,
+    chargePoints * (arrivalProbability / 200) * factor,
     chargePoints
   );
 }
 
-export function calculatePowerUsage(
+export function calculatePowerUsageOverTime(
   chargePoints: number,
-  utilizationRate: number,
+  arrivalProbability: number,
   power: number,
   timePeriod: TimePeriod
 ) {
@@ -66,7 +60,7 @@ export function calculatePowerUsage(
   return factors.map((factor) => {
     const activeChargePoints = calculateActiveChargePoints(
       chargePoints,
-      utilizationRate,
+      arrivalProbability,
       factor
     );
 
@@ -81,9 +75,9 @@ export function calculateAveragePowerUsage(usageData: number[]) {
   );
 }
 
-export function calculateHourlyEnergyConsumption(
+export function calculateEnergyConsumptionOverTime(
   chargePoints: number,
-  utilizationRate: number,
+  arrivalProbability: number,
   power: number,
   consumption: number,
   timePeriod: TimePeriod
@@ -91,7 +85,7 @@ export function calculateHourlyEnergyConsumption(
   const hourlyEnergyConsumption = HOUR_FACTORS.map((factor) => {
     const activeChargePoints = calculateActiveChargePoints(
       chargePoints,
-      utilizationRate,
+      arrivalProbability,
       factor
     );
     const chargingDuration = consumption / power; // might be more than 1 hour

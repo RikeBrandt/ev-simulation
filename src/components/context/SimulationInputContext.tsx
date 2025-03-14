@@ -1,8 +1,9 @@
 import React, { createContext, useState, useContext, FC } from "react";
+import { DEFAULT_INPUT } from "../utils/staticValues";
 
 export type SimulationInput = {
   chargePoints: number;
-  utilizationRate: number;
+  arrivalProbability: number;
   power: number;
   consumption: number;
 };
@@ -19,12 +20,8 @@ const SimulationInputContext = createContext<
 export const SimulationInputProvider: FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [simulationInput, setSimulationInput] = useState<SimulationInput>({
-    chargePoints: 20,
-    utilizationRate: 100,
-    power: 11,
-    consumption: 18,
-  });
+  const [simulationInput, setSimulationInput] =
+    useState<SimulationInput>(DEFAULT_INPUT);
 
   return (
     <SimulationInputContext.Provider

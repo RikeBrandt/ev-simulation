@@ -4,6 +4,10 @@ import SelectInput from "./inputs/SelectInput";
 import { Card } from "./layout/Card";
 import RangeInput from "./inputs/RangeInput";
 import { useSimulationInput } from "./context/SimulationInputContext";
+import {
+  MAX_ARRIVAL_PROBABILITY,
+  MIN_ARRIVAL_PROBABILITY,
+} from "./utils/staticValues";
 
 export const InputForm = () => {
   const { setSimulationInput } = useSimulationInput();
@@ -11,11 +15,16 @@ export const InputForm = () => {
   const [chargePoints, setChargePoints] = useState(20);
   const [power, setPower] = useState(11);
   const [consumption, setConsumption] = useState(18);
-  const [utilizationRate, setUtilizationRate] = useState(100);
+  const [arrivalProbability, setarrivalProbability] = useState(100);
 
   useEffect(() => {
-    setSimulationInput({ chargePoints, power, consumption, utilizationRate });
-  }, [chargePoints, power, consumption, utilizationRate]);
+    setSimulationInput({
+      chargePoints,
+      power,
+      consumption,
+      arrivalProbability,
+    });
+  }, [chargePoints, power, consumption, arrivalProbability]);
 
   return (
     <Card>
@@ -51,9 +60,11 @@ export const InputForm = () => {
         />
 
         <RangeInput
-          value={utilizationRate}
-          onChange={setUtilizationRate}
-          label="Utilization rate"
+          value={arrivalProbability}
+          onChange={setarrivalProbability}
+          label="Arrival Probability"
+          min={MIN_ARRIVAL_PROBABILITY}
+          max={MAX_ARRIVAL_PROBABILITY}
         />
       </div>
     </Card>

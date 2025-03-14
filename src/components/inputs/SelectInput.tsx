@@ -27,7 +27,7 @@ const SelectInput: FC<SelectInputProps> = ({
           </option>
         ))}
       </select>
-      <Label label={label} />
+      <Label>{label}</Label>
     </div>
   );
 };

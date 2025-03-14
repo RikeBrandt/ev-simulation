@@ -4,13 +4,16 @@ const week = [
   "Monday",
   "Tuesday",
   "Wednesday",
-  "Thurrsday",
+  "Thursday",
   "Friday",
   "Saturday",
   "Sunday",
 ];
 
-export function getXLabelByTimePeriod(index: number, timePeriod: TimePeriod) {
+export function getXAsisLabelByTimePeriod(
+  index: number,
+  timePeriod: TimePeriod
+) {
   switch (timePeriod) {
     case "DAY":
       return `${index + 6}:00`;
