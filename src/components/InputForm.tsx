@@ -26,8 +26,8 @@ export const InputForm = () => {
   }, [chargePoints, power, consumption, arrivalProbability]);
 
   return (
-    <div className="flex flex-col gap-5 min-w-[220px]">
-      <h3>Customize your Scenario</h3>
+    <div className="flex flex-col gap-8 min-w-[220px]">
+      <h3 className="font-semibold">Customize your Scenario</h3>
 
       <NumberInput
         value={chargePoints}

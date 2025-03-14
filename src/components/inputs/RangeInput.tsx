@@ -33,11 +33,11 @@ const RangeInput: FC<RangeInputProps> = ({
         className="w-full appearance-none bg-transparent cursor-pointer"
         style={{
           WebkitAppearance: "none",
-          background: `linear-gradient(to right, var(--color-cyan-400) 0%, var(--color-cyan-400) ${
+          background: `linear-gradient(to right, var(--color-green-400) 0%, var(--color-green-400) ${
             ((value - 10) / (max - 10)) * 100
-          }%, var(--color-cyan-800) ${
+          }%, var(--color-green-800) ${
             ((value - 10) / (max - 10)) * 100
-          }%, var(--color-cyan-800) 100%)`,
+          }%, var(--color-green-800) 100%)`,
         }}
       />
 

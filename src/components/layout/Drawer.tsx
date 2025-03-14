@@ -12,7 +12,7 @@ export const Drawer: FC<DrawerProps> = ({ children, open, setOpen }) => {
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="bg-zinc-900 p-5 hidden md:flex flex-col gap-4">
+      <aside className="bg-zinc-900 p-5 hidden md:flex flex-col gap-8">
         <Headline />
         {children}
       </aside>
@@ -29,7 +29,6 @@ export const Drawer: FC<DrawerProps> = ({ children, open, setOpen }) => {
         {children}
       </aside>
 
-      {/* Backdrop */}
       {open && (
         <div
           className="fixed inset-0 bg-black/50  z-40"
