@@ -49,7 +49,7 @@ export const MainNumbers = () => {
           timePeriod
         )
       ),
-    [chargePoints, utilizationRate, power, consumption]
+    [chargePoints, utilizationRate, power, consumption, timePeriod]
   );
 
   return (

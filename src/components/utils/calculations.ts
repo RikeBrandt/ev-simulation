@@ -1,5 +1,11 @@
 import { TimePeriod } from "../context/TimePeriodContext";
 
+/**
+ *
+ * @param chargePoints
+ * @param utilizationRate
+ * @returns The base amount of used charge points
+ */
 export function calculateBaseUtilization(
   chargePoints: number,
   utilizationRate: number
@@ -82,9 +88,7 @@ export function calculateHourlyEnergyConsumption(
   consumption: number,
   timePeriod: TimePeriod
 ) {
-  const factors = timePeriod === "DAY" ? HOUR_FACTORS : WEEK_FACTORS;
-
-  return factors.map((factor) => {
+  const hourlyEnergyConsumption = HOUR_FACTORS.map((factor) => {
     const activeChargePoints = calculateActiveChargePoints(
       chargePoints,
       utilizationRate,
@@ -94,8 +98,15 @@ export function calculateHourlyEnergyConsumption(
     const durationPerHour = chargingDuration / Math.ceil(chargingDuration); //average charging duration
     return Math.round(power * durationPerHour * activeChargePoints);
   });
+  if (timePeriod === "DAY") return hourlyEnergyConsumption;
+
+  const averageDailyEnergyConsumption = calculateTotalEnergyConsumption(
+    hourlyEnergyConsumption
+  );
+
+  return WEEK_FACTORS.map((factor) => factor * averageDailyEnergyConsumption);
 }
 
 export function calculateTotalEnergyConsumption(consumptionData: number[]) {
-  return consumptionData.reduce((prev, cur) => prev + cur);
+  return Math.round(consumptionData.reduce((prev, cur) => prev + cur));
 }
