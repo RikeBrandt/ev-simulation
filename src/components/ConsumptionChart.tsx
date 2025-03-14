@@ -32,7 +32,7 @@ export const EnergyConsumptionChart = () => {
 
   const chartOptions: ApexOptions = {
     chart: { type: "bar", toolbar: { show: false } },
-    ...generateChartOptions(energyData, {
+    ...generateChartOptions({
       xAsis: getXAsisDescription(timePeriod),
       yAxis: "Energy Consumption (kWh)",
     }),

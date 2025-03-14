@@ -33,7 +33,7 @@ export const PowerSimulationChart = () => {
 
   const chartOptions: ApexOptions = {
     chart: { type: "area", toolbar: { show: false }, zoom: { enabled: false } },
-    ...generateChartOptions(powerData, {
+    ...generateChartOptions({
       xAsis: getXAsisDescription(timePeriod),
       yAxis: "Power Usage (kW)",
     }),

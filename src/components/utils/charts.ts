@@ -35,10 +35,10 @@ export function getXAsisDescription(timePeriod: TimePeriod) {
   }
 }
 
-export function generateChartOptions(
-  data: { x: number | string; y: number }[],
-  description: { xAsis: string; yAxis: string }
-) {
+export function generateChartOptions(description: {
+  xAsis: string;
+  yAxis: string;
+}) {
   const titleStyle = {
     style: {
       color: "var(--chart-gray)",
@@ -49,7 +49,6 @@ export function generateChartOptions(
   const labelsStyle = { labels: { style: { colors: "var(--chart-gray)" } } };
   return {
     xaxis: {
-      categories: data.map((d) => d.x),
       title: {
         text: description.xAsis,
         ...titleStyle,
@@ -65,7 +64,7 @@ export function generateChartOptions(
     },
     tooltip: { theme: "dark" },
     dataLabels: { enabled: false },
-    colors: ["oklch(0.789 0.154 211.53)"],
+    colors: ["var(--color-green-400)"],
     grid: {
       show: true,
       borderColor: "var(--chart-gray)",
