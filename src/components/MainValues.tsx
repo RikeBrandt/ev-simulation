@@ -58,7 +58,7 @@ export const MainValues = () => {
   );
 
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-2 md:gap-4 flex-wrap">
       <ValueCard
         result={`${peakPowerLoad} kW`}
         label="peak power load"

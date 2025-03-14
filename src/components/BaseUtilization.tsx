@@ -16,23 +16,21 @@ export const BaseUtilization = () => {
   );
 
   return (
-    <Card>
-      <div className="flex items-center gap-1">
-        <ChargeIcon />
-        <p className="text-sm text-zinc-300">Base utilization</p>
-      </div>
-      <div
-        className={`grid ${
-          slots.length > 25 ? "grid-cols-6" : "grid-cols-5"
-        } gap-2 pt-4`}
-      >
-        {slots.map((slot) => (
-          <div
-            className={slot < baseUtilization ? "slot slot-active" : "slot"}
-            key={slot}
-          ></div>
-        ))}
-      </div>
-    </Card>
+    <div className="grow md:max-w-[300px]">
+      <Card>
+        <div className="flex items-center gap-1 pb-2">
+          <ChargeIcon />
+          <p className="text-sm text-zinc-300 text-nowrap">Base utilization</p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {slots.map((slot) => (
+            <div
+              className={slot < baseUtilization ? "slot slot-active" : "slot"}
+              key={slot}
+            ></div>
+          ))}
+        </div>
+      </Card>
+    </div>
   );
 };
