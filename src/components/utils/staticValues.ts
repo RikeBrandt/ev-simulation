@@ -20,6 +20,3 @@ export const DEFAULT_INPUT: SimulationInput = {
   power: 11,
   consumption: 18,
 };
-
-export const SECONDARY_CHART_COLOR = "#90A4AE";
-export const PRIMARY_CHART_COLOR = "oklch(0.789 0.154 211.53)";

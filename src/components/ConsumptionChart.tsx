@@ -5,11 +5,11 @@ import { calculateEnergyConsumptionOverTime } from "./utils/calculations";
 import { ApexOptions } from "apexcharts";
 import { Card } from "./layout/Card";
 import { useTimePeriod } from "./context/TimePeriodContext";
-import { getXAsisDescription, getXAsisLabelByTimePeriod } from "./utils/labels";
 import {
-  PRIMARY_CHART_COLOR,
-  SECONDARY_CHART_COLOR,
-} from "./utils/staticValues";
+  generateChartOptions,
+  getXAsisDescription,
+  getXAsisLabelByTimePeriod,
+} from "./utils/charts";
 
 export const EnergyConsumptionChart = () => {
   const {
@@ -32,28 +32,10 @@ export const EnergyConsumptionChart = () => {
 
   const chartOptions: ApexOptions = {
     chart: { type: "bar", toolbar: { show: false } },
-    xaxis: {
-      categories: energyData.map((d) => d.x),
-      title: {
-        text: getXAsisDescription(timePeriod),
-        style: { color: SECONDARY_CHART_COLOR },
-      },
-      labels: { style: { colors: SECONDARY_CHART_COLOR } },
-    },
-    yaxis: {
-      title: {
-        text: "Energy Consumption (kWh)",
-        style: { color: SECONDARY_CHART_COLOR },
-      },
-      labels: { style: { colors: SECONDARY_CHART_COLOR } },
-    },
-    tooltip: { theme: "dark" },
-    dataLabels: { enabled: false },
-    colors: [PRIMARY_CHART_COLOR],
-    grid: {
-      show: true,
-      borderColor: SECONDARY_CHART_COLOR,
-    },
+    ...generateChartOptions(energyData, {
+      xAsis: getXAsisDescription(timePeriod),
+      yAxis: "Energy Consumption (kWh)",
+    }),
   };
 
   return (

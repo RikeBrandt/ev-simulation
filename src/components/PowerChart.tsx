@@ -2,17 +2,14 @@ import { useMemo } from "react";
 import Chart from "react-apexcharts";
 import { useSimulationInput } from "./context/SimulationInputContext";
 import { Card } from "./layout/Card";
-import {
-  calculatePowerUsageOverTime,
-  calculateMaxPowerLoad,
-} from "./utils/calculations";
+import { calculatePowerUsageOverTime } from "./utils/calculations";
 import { ApexOptions } from "apexcharts";
 import { useTimePeriod } from "./context/TimePeriodContext";
-import { getXAsisDescription, getXAsisLabelByTimePeriod } from "./utils/labels";
 import {
-  PRIMARY_CHART_COLOR,
-  SECONDARY_CHART_COLOR,
-} from "./utils/staticValues";
+  generateChartOptions,
+  getXAsisDescription,
+  getXAsisLabelByTimePeriod,
+} from "./utils/charts";
 
 export const PowerSimulationChart = () => {
   const {
@@ -36,34 +33,15 @@ export const PowerSimulationChart = () => {
 
   const chartOptions: ApexOptions = {
     chart: { type: "area", toolbar: { show: false }, zoom: { enabled: false } },
-    xaxis: {
-      title: {
-        text: getXAsisDescription(timePeriod),
-        style: { color: SECONDARY_CHART_COLOR },
-      },
-      categories: powerData.map((d) => d.x),
-      labels: { style: { colors: SECONDARY_CHART_COLOR } },
-    },
-    yaxis: {
-      title: {
-        text: "Power Usage (kW)",
-        style: { color: SECONDARY_CHART_COLOR },
-      },
-      max: calculateMaxPowerLoad(chargePoints, power),
-      labels: { style: { colors: SECONDARY_CHART_COLOR } },
-    },
+    ...generateChartOptions(powerData, {
+      xAsis: getXAsisDescription(timePeriod),
+      yAxis: "Power Usage (kW)",
+    }),
     stroke: { curve: "smooth", width: 2 },
     fill: {
       type: "gradient",
       gradient: { shadeIntensity: 0.8, opacityFrom: 0.8, opacityTo: 0.2 },
     },
-    dataLabels: { enabled: false },
-    colors: [PRIMARY_CHART_COLOR],
-    grid: {
-      show: true,
-      borderColor: SECONDARY_CHART_COLOR,
-    },
-    tooltip: { enabled: true, theme: "dark" },
   };
 
   return (
