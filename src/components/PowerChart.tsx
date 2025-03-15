@@ -45,7 +45,7 @@ export const PowerSimulationChart = () => {
   };
 
   return (
-    <Card>
+    <Card className="grow-8 w-full">
       <Chart
         options={chartOptions}
         series={[{ name: "Power Usage (kW)", data: powerData }]}

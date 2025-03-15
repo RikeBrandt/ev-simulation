@@ -43,9 +43,7 @@ function App() {
             </div>
 
             <div className="flex gap-4 flex-wrap md:flex-nowrap">
-              <div className="grow-8 w-full">
-                <PowerSimulationChart />
-              </div>
+              <PowerSimulationChart />
               <BaseUtilization />
             </div>
 

@@ -20,7 +20,7 @@ export function getXAsisLabelByTimePeriod(
     case "WEEK":
       return week[index];
     case "MONTH":
-      return index;
+      return index + 1;
   }
 }
 

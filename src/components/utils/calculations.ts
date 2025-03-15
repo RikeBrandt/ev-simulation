@@ -105,13 +105,13 @@ export function calculateEnergyConsumptionOverTime(
     case "DAY":
       return hourlyEnergyConsumption;
     case "WEEK": {
-      return WEEK_FACTORS.map(
-        (factor) => factor * averageDailyEnergyConsumption
+      return WEEK_FACTORS.map((factor) =>
+        Math.round(factor * averageDailyEnergyConsumption)
       );
     }
     default:
-      return MONTH_FACTORS.map(
-        (factor) => factor * averageDailyEnergyConsumption
+      return MONTH_FACTORS.map((factor) =>
+        Math.round(factor * averageDailyEnergyConsumption)
       );
   }
 }

@@ -17,7 +17,7 @@ export const BaseUtilization = () => {
 
   return (
     <div className="grow md:max-w-[300px]">
-      <Card>
+      <Card className="h-full">
         <div className="flex items-center gap-1 pb-2">
           <ChargeIcon />
           <p className="text-sm text-zinc-300 text-nowrap">Base utilization</p>

@@ -31,11 +31,20 @@ export const EnergyConsumptionChart = () => {
   }, [chargePoints, arrivalProbability, power, consumption, timePeriod]);
 
   const chartOptions: ApexOptions = {
-    chart: { type: "bar", toolbar: { show: false } },
+    chart: { type: "bar", toolbar: { show: false }, zoom: { enabled: false } },
     ...generateChartOptions({
       xAsis: getXAsisDescription(timePeriod),
       yAxis: "Energy Consumption (kWh)",
     }),
+    fill: {
+      type: "gradient",
+      gradient: {
+        shade: "dark",
+        type: "vertical",
+        gradientToColors: ["var(--color-green-100)"],
+        stops: [0, 100],
+      },
+    },
   };
 
   return (

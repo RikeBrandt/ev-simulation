@@ -34,9 +34,9 @@ const RangeInput: FC<RangeInputProps> = ({
         style={{
           WebkitAppearance: "none",
           background: `linear-gradient(to right, var(--color-green-400) 0%, var(--color-green-400) ${
-            ((value - 10) / (max - 10)) * 100
+            ((value - 20) / (max - 20)) * 100
           }%, var(--color-green-800) ${
-            ((value - 10) / (max - 10)) * 100
+            ((value - 20) / (max - 20)) * 100
           }%, var(--color-green-800) 100%)`,
         }}
       />
