@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Chart from "react-apexcharts";
 import { useSimulationInput } from "./context/SimulationInputContext";
 import { Card } from "./layout/Card";
@@ -17,6 +17,12 @@ export const PowerSimulationChart = () => {
   } = useSimulationInput();
   const { timePeriod } = useTimePeriod();
 
+  const [xAxisLabel, setXAxisLabel] = useState(getXAsisDescription(timePeriod));
+
+  useEffect(() => {
+    setXAxisLabel(getXAsisDescription(timePeriod));
+  }, [timePeriod]);
+
   const powerData = useMemo(
     () =>
       calculatePowerUsageOverTime(
@@ -34,7 +40,7 @@ export const PowerSimulationChart = () => {
   const chartOptions: ApexOptions = {
     chart: { type: "area", toolbar: { show: false }, zoom: { enabled: false } },
     ...generateChartOptions({
-      xAsis: getXAsisDescription(timePeriod),
+      xAsis: xAxisLabel,
       yAxis: "Power Usage (kW)",
     }),
     stroke: { curve: "smooth", width: 2 },

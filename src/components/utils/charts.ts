@@ -14,9 +14,12 @@ export function getXAsisLabelByTimePeriod(
   index: number,
   timePeriod: TimePeriod
 ) {
+  console.log(timePeriod);
   switch (timePeriod) {
-    case "DAY":
+    case "DAY": {
+      console.log("t");
       return `${index + 6}:00`;
+    }
     case "WEEK":
       return week[index];
     case "MONTH":

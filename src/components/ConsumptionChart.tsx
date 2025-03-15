@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Chart from "react-apexcharts";
 import { useSimulationInput } from "./context/SimulationInputContext";
 import { calculateEnergyConsumptionOverTime } from "./utils/calculations";
@@ -17,6 +17,12 @@ export const EnergyConsumptionChart = () => {
   } = useSimulationInput();
   const { timePeriod } = useTimePeriod();
 
+  const [xAxisLabel, setXAxisLabel] = useState(getXAsisDescription(timePeriod));
+
+  useEffect(() => {
+    setXAxisLabel(getXAsisDescription(timePeriod));
+  }, [timePeriod]);
+
   const energyData = useMemo(() => {
     return calculateEnergyConsumptionOverTime(
       chargePoints,
@@ -33,7 +39,7 @@ export const EnergyConsumptionChart = () => {
   const chartOptions: ApexOptions = {
     chart: { type: "bar", toolbar: { show: false }, zoom: { enabled: false } },
     ...generateChartOptions({
-      xAsis: getXAsisDescription(timePeriod),
+      xAsis: xAxisLabel,
       yAxis: "Energy Consumption (kWh)",
     }),
     fill: {
