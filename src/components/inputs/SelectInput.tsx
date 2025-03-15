@@ -15,7 +15,7 @@ const SelectInput: FC<SelectInputProps> = ({
   onChange,
 }) => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col grow">
       <div className="px-2 py-2 border border-zinc-500 rounded-lg  focus:ring-1 focus:ring-white">
         <select
           value={value}

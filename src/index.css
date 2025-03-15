@@ -32,6 +32,10 @@ body {
   min-height: 100vh;
 }
 
+button {
+  cursor: pointer;
+}
+
 .slot {
   width: 25px;
   height: 45px;
@@ -43,6 +47,15 @@ body {
   background-color: var(--color-green-400);
   background: linear-gradient(
     0deg,
+    var(--color-green-400) 0%,
+    var(--color-green-100) 100%
+  );
+}
+
+.button-gradient {
+  background-color: var(--color-green-400);
+  background: linear-gradient(
+    90deg,
     var(--color-green-400) 0%,
     var(--color-green-100) 100%
   );

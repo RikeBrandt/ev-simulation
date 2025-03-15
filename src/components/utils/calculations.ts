@@ -1,4 +1,5 @@
 import { TimePeriod } from "../context/TimePeriodContext";
+import { ChargingCluster } from "../InputForm";
 import {
   HOUR_FACTORS,
   MAX_ARRIVAL_PROBABILITY,
@@ -7,12 +8,18 @@ import {
   WEEK_FACTORS,
 } from "./staticValues";
 
-/**
- *
- * @param chargePoints
- * @param arrivalProbability
- * @returns The base amount of used charge points
- */
+export function convertClustersToAveragePower(clusters: ChargingCluster[]) {
+  const totalPower = clusters.reduce(
+    (sum, cluster) => sum + cluster.power * cluster.amount,
+    0
+  );
+  return Math.round(totalPower / calculateTotalChargingStations(clusters));
+}
+
+export function calculateTotalChargingStations(clusters: ChargingCluster[]) {
+  return clusters.reduce((sum, cluster) => sum + cluster.amount, 0);
+}
+
 export function calculateBaseUtilization(
   chargePoints: number,
   arrivalProbability: number
