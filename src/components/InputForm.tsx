@@ -92,7 +92,7 @@ export const InputForm = () => {
             {chargingClusters.length > 1 && (
               <button
                 onClick={() => removeChargeStation(index)}
-                className="pb-3"
+                className="pt-4"
               >
                 <CloseIcon />
               </button>
