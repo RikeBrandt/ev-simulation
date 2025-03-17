@@ -23,7 +23,7 @@ export const InputForm = () => {
   const { setSimulationInput } = useSimulationInput();
 
   const [chargingClusters, setChargingClusters] = useState<ChargingCluster[]>([
-    { amount: 20, power: 11 }, // Default pair
+    { amount: 20, power: 11 },
   ]);
 
   const [consumption, setConsumption] = useState(18);
@@ -46,6 +46,7 @@ export const InputForm = () => {
   };
 
   const removeChargeStation = (index: number) => {
+    if (chargingClusters.length === 1) return;
     setChargingClusters((prev) => prev.filter((_, i) => i !== index));
   };
 
@@ -84,9 +85,14 @@ export const InputForm = () => {
               ]}
             />
 
-            <button onClick={() => removeChargeStation(index)} className="pb-3">
-              <CloseIcon />
-            </button>
+            {chargingClusters.length > 1 && (
+              <button
+                onClick={() => removeChargeStation(index)}
+                className="pb-3"
+              >
+                <CloseIcon />
+              </button>
+            )}
           </div>
         ))}
 

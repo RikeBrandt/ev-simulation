@@ -14,16 +14,15 @@ export function getXAsisLabelByTimePeriod(
   index: number,
   timePeriod: TimePeriod
 ) {
-  console.log(timePeriod);
   switch (timePeriod) {
     case "DAY": {
-      console.log("t");
       return `${index + 6}:00`;
     }
     case "WEEK":
       return week[index];
-    case "MONTH":
+    case "MONTH": {
       return index + 1;
+    }
   }
 }
 
@@ -38,10 +37,13 @@ export function getXAsisDescription(timePeriod: TimePeriod) {
   }
 }
 
-export function generateChartOptions(description: {
-  xAsis: string;
-  yAxis: string;
-}) {
+export function generateChartOptions(
+  description: {
+    xAsis: string;
+    yAxis: string;
+  },
+  max?: number
+) {
   const titleStyle = {
     style: {
       color: "var(--chart-gray)",
@@ -59,6 +61,7 @@ export function generateChartOptions(description: {
       ...labelsStyle,
     },
     yaxis: {
+      max,
       title: {
         text: description.yAxis,
         ...titleStyle,

@@ -56,6 +56,7 @@ export const EnergyConsumptionChart = () => {
   return (
     <Card>
       <Chart
+        key={JSON.stringify(energyData)}
         options={chartOptions}
         series={[
           {

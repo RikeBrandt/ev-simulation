@@ -1,8 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import Chart from "react-apexcharts";
 import { useSimulationInput } from "./context/SimulationInputContext";
 import { Card } from "./layout/Card";
-import { calculatePowerUsageOverTime } from "./utils/calculations";
+import {
+  calculateMaxPowerLoad,
+  calculatePowerUsageOverTime,
+} from "./utils/calculations";
 import { ApexOptions } from "apexcharts";
 import { useTimePeriod } from "./context/TimePeriodContext";
 import {
@@ -16,12 +19,6 @@ export const PowerSimulationChart = () => {
     simulationInput: { chargePoints, arrivalProbability, power },
   } = useSimulationInput();
   const { timePeriod } = useTimePeriod();
-
-  const [xAxisLabel, setXAxisLabel] = useState(getXAsisDescription(timePeriod));
-
-  useEffect(() => {
-    setXAxisLabel(getXAsisDescription(timePeriod));
-  }, [timePeriod]);
 
   const powerData = useMemo(
     () =>
@@ -39,10 +36,13 @@ export const PowerSimulationChart = () => {
 
   const chartOptions: ApexOptions = {
     chart: { type: "area", toolbar: { show: false }, zoom: { enabled: false } },
-    ...generateChartOptions({
-      xAsis: xAxisLabel,
-      yAxis: "Power Usage (kW)",
-    }),
+    ...generateChartOptions(
+      {
+        xAsis: getXAsisDescription(timePeriod),
+        yAxis: "Power Usage (kW)",
+      },
+      calculateMaxPowerLoad(chargePoints, power)
+    ),
     stroke: { curve: "smooth", width: 2 },
     fill: {
       type: "gradient",
@@ -53,6 +53,7 @@ export const PowerSimulationChart = () => {
   return (
     <Card className="grow-8 w-full">
       <Chart
+        key={JSON.stringify(powerData)}
         options={chartOptions}
         series={[{ name: "Power Usage (kW)", data: powerData }]}
         type="area"
