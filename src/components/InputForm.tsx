@@ -4,6 +4,7 @@ import SelectInput from "./inputs/SelectInput";
 import RangeInput from "./inputs/RangeInput";
 import { useSimulationInput } from "./context/SimulationInputContext";
 import {
+  DEFAULT_INPUT,
   MAX_ARRIVAL_PROBABILITY,
   MIN_ARRIVAL_PROBABILITY,
 } from "./utils/staticValues";
@@ -23,11 +24,13 @@ export const InputForm = () => {
   const { setSimulationInput } = useSimulationInput();
 
   const [chargingClusters, setChargingClusters] = useState<ChargingCluster[]>([
-    { amount: 20, power: 11 },
+    { amount: DEFAULT_INPUT.chargePoints, power: DEFAULT_INPUT.power },
   ]);
 
-  const [consumption, setConsumption] = useState(18);
-  const [arrivalProbability, setarrivalProbability] = useState(100);
+  const [consumption, setConsumption] = useState(DEFAULT_INPUT.consumption);
+  const [arrivalProbability, setarrivalProbability] = useState(
+    DEFAULT_INPUT.arrivalProbability
+  );
 
   const addChargingCluster = () => {
     setChargingClusters([...chargingClusters, { amount: 3, power: 22 }]);
@@ -57,7 +60,7 @@ export const InputForm = () => {
       consumption,
       arrivalProbability,
     });
-  }, [chargingClusters, consumption, arrivalProbability]);
+  }, [chargingClusters, consumption, arrivalProbability, setSimulationInput]);
 
   return (
     <div className="flex flex-col gap-8 min-w-[220px]">
@@ -65,7 +68,7 @@ export const InputForm = () => {
 
       <div className="flex flex-col gap-2 items-start">
         {chargingClusters.map((cluster, index) => (
-          <div key={index} className="flex gap-4 items-center">
+          <div key={index} className="flex gap-4 items-start">
             <NumberInput
               value={cluster.amount}
               setValue={(value: number) =>
@@ -81,7 +84,8 @@ export const InputForm = () => {
               options={[
                 { value: 7, label: "7 kW" },
                 { value: 11, label: "11 kW" },
-                { value: 15, label: "15 kW" },
+                { value: 22, label: "22 kW" },
+                { value: 50, label: "50 kW" },
               ]}
             />
 
@@ -96,7 +100,7 @@ export const InputForm = () => {
           </div>
         ))}
 
-        <button onClick={addChargingCluster} className="pt-2 ">
+        <button onClick={addChargingCluster} className="pt-2">
           <div className="flex button-gradient rounded-md py-1 px-2 text-black font-medium">
             <PlusIcon /> Add charging cluster
           </div>

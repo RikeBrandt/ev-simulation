@@ -20,7 +20,7 @@ export function getXAsisLabelByTimePeriod(
     }
     case "WEEK":
       return week[index];
-    case "MONTH": {
+    default: {
       return index + 1;
     }
   }
@@ -32,7 +32,7 @@ export function getXAsisDescription(timePeriod: TimePeriod) {
       return "Time of day";
     case "WEEK":
       return "Day of the week";
-    case "MONTH":
+    default:
       return "Day of the month";
   }
 }

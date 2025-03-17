@@ -101,8 +101,8 @@ export function calculateEnergyConsumptionOverTime(
       arrivalProbability,
       factor
     );
-    const chargingDuration = consumption / power; // might be more than 1 hour
-    const durationPerHour = chargingDuration / Math.ceil(chargingDuration); //average charging duration
+    const chargingDuration = consumption / power;
+    const durationPerHour = chargingDuration / Math.ceil(chargingDuration);
     return Math.round(power * durationPerHour * activeChargePoints);
   });
   const averageDailyEnergyConsumption = calculateTotalEnergyConsumption(

@@ -3,7 +3,7 @@ import { Label } from "./Label";
 
 export const NumberInput: FC<{
   value: number;
-  setValue: any;
+  setValue: (v: number) => void;
   label: string;
 }> = ({ value, setValue, label }) => {
   return (

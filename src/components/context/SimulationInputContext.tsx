@@ -1,12 +1,6 @@
 import React, { createContext, useState, useContext, FC } from "react";
 import { DEFAULT_INPUT } from "../utils/staticValues";
-
-export type SimulationInput = {
-  chargePoints: number;
-  arrivalProbability: number;
-  power: number;
-  consumption: number;
-};
+import { SimulationInput } from "../utils/types";
 
 interface SimulationInputContextType {
   simulationInput: SimulationInput;

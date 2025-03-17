@@ -27,7 +27,7 @@ export const MainValues = () => {
         power,
         timePeriod
       ),
-    [arrivalProbability, power, timePeriod]
+    [arrivalProbability, power, timePeriod, chargePoints]
   );
 
   const averagePowerLoad = useMemo(

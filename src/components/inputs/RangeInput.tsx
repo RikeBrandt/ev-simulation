@@ -1,13 +1,13 @@
 import { FC, useState } from "react";
 import { Label } from "./Label";
 
-interface RangeInputProps {
+type RangeInputProps = {
   value: number;
   onChange: (value: number) => void;
   label: string;
   min: number;
   max: number;
-}
+};
 
 const RangeInput: FC<RangeInputProps> = ({
   value,
@@ -55,7 +55,7 @@ const RangeInput: FC<RangeInputProps> = ({
 
       <div className="flex justify-between mt-2 text-xs text-zinc-300">
         <span>{min}%</span>
-        <span className="font-semibold">{mid}%</span>
+        <span className="font-semibold pr-3">{mid}%</span>
         <span>{max}%</span>
       </div>
 

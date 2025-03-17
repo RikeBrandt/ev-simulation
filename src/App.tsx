@@ -1,4 +1,3 @@
-import "./App.css";
 import { InputForm } from "./components/InputForm";
 import { BaseUtilization } from "./components/BaseUtilization";
 import { SimulationInputProvider } from "./components/context/SimulationInputContext";
@@ -23,6 +22,7 @@ function App() {
           </Drawer>
 
           <div className="grow flex flex-col gap-4 p-4 w-full">
+            {/** Mobile only */}
             <div className="md:hidden">
               <button
                 onClick={() => setOpen(true)}
@@ -37,6 +37,7 @@ function App() {
               <MainValues />
             </div>
 
+            {/** Desktop only */}
             <div className="justify-between items-center hidden md:flex">
               <MainValues />
               <TimePeriodSelection />

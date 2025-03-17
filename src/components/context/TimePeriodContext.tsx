@@ -1,9 +1,8 @@
 import React, { createContext, useState, useContext, FC } from "react";
 
-export type TimePeriod = "DAY" | "WEEK" | "MONTH";
+export const timePeriods = ["DAY", "WEEK", "MONTH"] as const;
 
-//todo make better
-export const timePeriods: TimePeriod[] = ["DAY", "WEEK", "MONTH"];
+export type TimePeriod = (typeof timePeriods)[number];
 
 interface TimePeriodContextType {
   timePeriod: TimePeriod;

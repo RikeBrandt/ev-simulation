@@ -1,5 +1,5 @@
-import { SimulationInput } from "../context/SimulationInputContext";
 import { TimePeriod } from "../context/TimePeriodContext";
+import { SimulationInput } from "./types";
 
 export const MAX_ARRIVAL_PROBABILITY = 200;
 export const MIN_ARRIVAL_PROBABILITY = 20;
