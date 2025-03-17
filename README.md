@@ -35,7 +35,7 @@ A web-based simulation tool for visualizing EV charging station power usage and 
 
 ## 📊 Usage
 
-Adjust input values (number of charge points, power, arrival probability, etc.).
-View real-time simulation results in interactive charts.
-Analyze peak loads and energy consumption trends.
-Select your time period.
+- Adjust input values (number of charge points, power, arrival probability, etc.).
+- View real-time simulation results in interactive charts.
+- Analyze peak loads and energy consumption trends.
+- Select your time period.
